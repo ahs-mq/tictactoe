@@ -3,7 +3,7 @@ let turn = 0;
 
 function playerChoice(choice){
     choice = Number(choice);
-    if (board[choice] == null && choice <= 9){ //check if theres a value inside the cell and dont leave grid
+    if (board[choice] == null && choice < 9){ //check if theres a value inside the cell and dont leave grid
         if(turn == 0){
             board[choice] = 'x';
             turn = 1;
@@ -21,7 +21,7 @@ function playerChoice(choice){
                 break;
             case 0:
                 turn = 1;
-                break;
+                break;     
         }
     }
    
@@ -34,17 +34,19 @@ function verifyWin(board,player){
                     [0,4,8],[2,4,6]]
     for (let i = 0; i < winCombos.length; i++){
         let combo = winCombos[i]; //iterates over all possible win combos
-        if (board[combo[0]] == player && board[combo[1]] == player && board[combo[2]] == player){
+        if (board[combo[0]] == player && board[combo[1]] == player && board[combo[2]] == player && (player == 'x' || player == 'o')){
+            console.log(board);
             return true;
+            
         }else {
+            console.log(board);
             return false;
         }
     }
 }
 
 function playGame(){
-
-    while (board.length <= 9){
+    while(board.some((el) => el == null)){
         p1 = playerChoice(prompt('Enter 0-8 for X'));
         logx = verifyWin(board,p1);
         console.log(board);
