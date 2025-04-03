@@ -1,28 +1,35 @@
 let board = new Array(9).fill(null); //creates an array with 9 empty "cells"
 let turn = 0;
+let grid = document.querySelectorAll(".grid");
+
+(() => {
+    for (let i = 0; i < grid.length; i++) {
+        grid[i].setAttribute('value', i);
+        grid[i].addEventListener("click", () => {
+            playGame(i)
+        });
+    }
+})();
+
+
 
 function playerChoice(choice){
     choice = Number(choice);
     if (board[choice] == null && choice < 9){ //check if theres a value inside the cell and dont leave grid
         if(turn == 0){
             board[choice] = 'x';
+            grid[choice].textContent = 'X'
             turn = 1;
-            return 'x'
+            return 'x';
         }else {
             board[choice] = 'o';
             turn = 0;
+            grid[choice].textContent = 'O'
             return 'o';
         }
     }else {
         window.alert("Invalid play");
-        switch(turn){
-            case 1:
-                turn = 0;
-                break;
-            case 0:
-                turn = 1;
-                break;     
-        }
+        return null;
     }
    
 }
@@ -30,7 +37,7 @@ function playerChoice(choice){
 
 function verifyWin(board,player){
     const winCombos = [[0,1,2],[3,4,5],[6,7,8],
-                    [0,3,6][1,4,7],[2,5,8],
+                    [0,3,6],[1,4,7],[2,5,8],
                     [0,4,8],[2,4,6]]
     for (let i = 0; i < winCombos.length; i++){
         let combo = winCombos[i]; //iterates over all possible win combos
@@ -45,28 +52,14 @@ function verifyWin(board,player){
     }
 }
 
-function playGame(){
-    while(board.some((el) => el == null)){
-        p1 = playerChoice(prompt('Enter 0-8 for X'));
-        logx = verifyWin(board,p1);
-        console.log(board);
-        if(logx == true){
-            window.alert("Player 1 Win");
-            break;
-        }
-        p2 = playerChoice(prompt('Enter 0-8 for O'));
-        logo = verifyWin(board,p2);
-        console.log(board);
-        if(logo == true){
-            window.alert("Player 2 Win");
-            break;
-        }
-    }
-    if (board.length == 9 && logx == false && logo == false) {
-        window.alert('tie');
+function playGame(index){
+    let player = playerChoice(index);
+    if (player){
+        win = verifyWin(board,player);
+    }if (win){
+        window.alert(`${player === 'x' ? 1 : 2} Wins!`)
+    }else if(!board.includes(null)){
+        window.alert("tie")
     }
 }
-
-playGame();
-console.log(board);
-
+    

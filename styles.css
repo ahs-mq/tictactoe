@@ -1,6 +1,41 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    overflow: hidden;
+}
+
+#main {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .board {
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(3,1fr);
     border: 2px solid red;
+    height: 300px;
+    width: 300px;
+}
+
+.grid {
+    border: 2px solid red;
+}
+
+.turn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.final {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
